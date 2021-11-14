@@ -1,0 +1,60 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.IO;
+using System.Threading.Tasks;
+
+namespace ConsoleApp2
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            string key = "crypto1234crypto";
+            string vector = "thermoAAAAthermo";
+            string text = "7IwDEpdhsP41iKPnRGEWe1HUMASC3nPY8OGvfwCBmeG1rK2drdhEQG1nK0BHcQVXXpQZ" +
+                "/iICZ51My1tvB6BEcEewJaArY1K2eVsS1KwIdap9YZrPlKRKZloW/jjgJTGD5v3FPANDlXygiMSWdtLNTDwm1pQ" +
+                "9an3ko3q21p2PSAD3B2f/++KfYhjxcoAjqFMhsbINhpbLtmTMjFQgB45T+62VnSE1yYprP/1iFd7ejfUg+wtZzk" +
+                "T+Dxl1joL198x+QmLHzSxh2ZiXlA1kwJcyjoQwZVIKAUC47H1nvR2ZZN0tPhA5LwU0YxQENHcN/3aERi7ayFRmHw" +
+                "eCE9YWIALeHjTGg80MOzo+6+vM7jgYWjilBGBpT/KNRgBldX0XYy31e3nA8lHNmgN/D23zbTV1TF1oV2L0FL1Fpjmf" +
+                "DJtNbVuheZJ2MlnnhcP/BlO2rwrmGjrC9j7m/g8LZZh7PaBjiYPjLOu3Ji0rQtu3FuJM3Z8/XvLYLUYKn2rJLuCg2/KAJr+" +
+                "YmMzlg15cpnul7MKfaomHT9salCdKgra29Tu+BDDFTJ+wWyUjXwXqZzIqpZQG2Bks9UTITq5ng/IFmrmTzH1M8EIOAKPGSMRX" +
+                "pqkAZPhaIRWZAdYvYeflp57dnWjKMimRmENvn7BQjDAyGdB9G6wJIT5nTft6aebmPhY3J5nIgFxeV7Eo2Am3jGtvc8L0o/1Qc" +
+                "pdxu7N5itPwFSdrks1q7YnMBkADlAGLxROt00H2tjQID7D9cLG1PkE3JOiVD9rhrkYbZutKAZ9C7sMw6IUZCarcSjT5gTUms1" +
+                "/IFJ3VCMlU31eC739tzpVQRm8eom3ppW8F4pbUAJ3wdcLOPKtWvn/3781ezgYDmEDPSrXMTzOOvY4Hz+YZfcavsKoeq6SNzz" +
+                "tdwBHR00mF7kA7pThSyYzGZqHK0yAB9kDcDQTm0MyOPDxSHyv2M8iJ+abnA5RrBgfqBeOJjJL6bP0jZZG5qfxEzA7bNhTri1" +
+                "W/oU3gH1lCGvrrrUIeiDKbfli2Vg7OR+7oC964gCRDjhP9iu/cB3TAOTesIVsnqmuhvsrF2F7cG660Vv3tVmO2YjIEPcMjPM" +
+                "qvXYk2x5GLfvZIwerLrMJrcimOciDLTLJaiyrkIkJTgOcliAizQU7KK8g3ruXige7CFFx3egPPn1AodHOCzxhSIKmBk4B9wX" +
+                "DGzJuzpV7NxNEU8jfYP3EEkI5qcjrsdkMxJ/xZIRbkYwulAqdED4vbEfq/zg13LQB6jkWmTo1S//+AMvilhv/WgIaqtLttz6" +
+                "cAlooDgMLlSYT6HGGkBSNA639vQFlfONoy4DDl7xz7f7a8qpPMR2A2TGOz8wI/nZ17/ZatzwRnudD8dlikwyyQNZIdAosLNf" +
+                "C+nj74wUCaoIdiDiFjDoph7ADAxR/t4+jgIhqh7Q1nod9nKqHctrbYNQNzDRAIn9WXtVsg1zYiMYuH7/aTo+wl/7pXBz8UWD" +
+                "P9tqtjvUJZwQ0rvwbWfTU8aA==";
+             
+            Chilkat.Crypt2 phase1 = new Chilkat.Crypt2();
+            phase1.CryptAlgorithm = "aes";
+            phase1.CipherMode = "ctr";
+            phase1.KeyLength = 256;
+            phase1.EncodingMode = "base64";
+            phase1.SetEncodedIV(vector, "ascii");
+            phase1.SetEncodedKey(key, "ascii");
+            string newtext = phase1.DecryptStringENC(text);
+            Console.WriteLine(newtext);
+            Console.WriteLine("------------------------");
+            Chilkat.Crypt2 phase2 = new Chilkat.Crypt2();
+            phase2.CryptAlgorithm = "aes";
+            phase2.CipherMode = "ctr";
+            phase2.KeyLength = 256;
+            phase2.EncodingMode = "base64";
+            phase2.SetEncodedIV(vector, "ascii");
+            phase2.SetEncodedKey(key, "ascii");
+            string encrypt = phase2.EncryptStringENC(newtext);
+            Console.WriteLine(encrypt);
+            if (text == encrypt)
+                Console.WriteLine("Тексти однаковi");
+
+
+            Console.ReadKey();
+        }
+    }
+}
